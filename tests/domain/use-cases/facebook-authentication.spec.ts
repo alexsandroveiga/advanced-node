@@ -1,8 +1,7 @@
 import { LoadFacebookUserApi } from '@/domain/contracts/apis'
 import { LoadUserAccountRepository, SaveFacebookAccountRepository } from '@/domain/contracts/repos'
 import { setupFacebookAuthentication, FacebookAuthentication } from '@/domain/use-cases'
-import { AuthenticationError } from '@/domain/entities/errors'
-import { AccessToken, FacebookAccount } from '@/domain/entities'
+import { AccessToken, FacebookAccount, AuthenticationError } from '@/domain/entities'
 import { TokenGenerator } from '@/domain/contracts/crypto'
 
 import { mocked } from 'ts-jest/utils'
@@ -40,7 +39,7 @@ describe('FacebookAuthentication', () => {
     )
   })
 
-  it('should call LoadFacebookUserApi with correct params', async () => {
+  it('should call LoadFacebookUserApi with correct input', async () => {
     await sut({ token })
 
     expect(facebookApi.loadUser).toHaveBeenCalledWith({ token })
@@ -72,7 +71,7 @@ describe('FacebookAuthentication', () => {
     expect(userAccountRepo.saveWithFacebook).toHaveBeenCalledTimes(1)
   })
 
-  it('should call TokenGenerator with correct params', async () => {
+  it('should call TokenGenerator with correct input', async () => {
     await sut({ token })
 
     expect(crypto.generateToken).toHaveBeenCalledWith({
@@ -83,9 +82,9 @@ describe('FacebookAuthentication', () => {
   })
 
   it('should return an AccessToken on success', async () => {
-    const authResult = await sut({ token })
+    const authOutput = await sut({ token })
 
-    expect(authResult).toEqual({ accessToken: 'any_generated_token' })
+    expect(authOutput).toEqual({ accessToken: 'any_generated_token' })
   })
 
   it('should rethrow if LoadFacebookUserApi throws', async () => {
