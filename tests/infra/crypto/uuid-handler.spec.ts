@@ -1,25 +1,19 @@
-import { UUIDGenerator } from '@/domain/contracts/gateways'
+import { UUIDHandler } from '@/infra/crypto'
 
 import { mocked } from 'ts-jest/utils'
 import { v4 } from 'uuid'
 
 jest.mock('uuid')
 
-class UuidHandler {
-  uuid ({ key }: UUIDGenerator.Input): UUIDGenerator.Output {
-    return `${key}_${v4()}`
-  }
-}
-
-describe('', () => {
-  let sut: UuidHandler
+describe('UUIDHandler', () => {
+  let sut: UUIDHandler
 
   beforeAll(() => {
     mocked(v4).mockReturnValue('any_uuid')
   })
 
   beforeEach(() => {
-    sut = new UuidHandler()
+    sut = new UUIDHandler()
   })
 
   it('should call uuid.v4', () => {
