@@ -65,9 +65,7 @@ describe('AuthenticationMiddleware', () => {
 
     expect(httpResponse).toEqual({
       statusCode: 200,
-      data: {
-        userId: 'any_user_id'
-      }
+      data: { userId: 'any_user_id' }
     })
   })
 })
